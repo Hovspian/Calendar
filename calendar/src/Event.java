@@ -13,7 +13,7 @@ public class Event implements Comparable<Event>, Serializable
 	private GregorianCalendar startTimeCal;
 	private GregorianCalendar endTimeCal;
 	private GregorianCalendar dayCal;
-	
+
 	/**
 	 * Creates an event with the specified name, start time, and end time
 	 * @param name The name of the event
@@ -25,11 +25,11 @@ public class Event implements Comparable<Event>, Serializable
 		this.name = name;
 		this.startTimeCal = start;
 		this.endTimeCal = end;
-		
+
 		this.dayCal = new GregorianCalendar(start.get(Calendar.YEAR), start.get(Calendar.MONTH), start.get(Calendar.DATE));
 	}
-	
-	
+
+
 	/**
 	 * Returns the name of the event.
 	 * @return The event's name
@@ -38,7 +38,7 @@ public class Event implements Comparable<Event>, Serializable
 	{
 		return this.name;
 	}
-	
+
 	/**
 	 * Returns a GregorianCalendar for the event's date and start time
 	 * @return The GregorianCalendar that has the event's date and start time
@@ -47,7 +47,7 @@ public class Event implements Comparable<Event>, Serializable
 	{
 		return this.startTimeCal;
 	}
-	
+
 	/**
 	 * Returns a GregorianCalendar for the event's date and end time
 	 * @return The GregorianCalendar that has the event's date and end time
@@ -56,7 +56,7 @@ public class Event implements Comparable<Event>, Serializable
 	{
 		return this.endTimeCal;
 	}
-	
+
 	/**
 	 * Returns a GregorianCalendar for the event's date
 	 * @return The GregorianCalendar that has the event's date
@@ -66,7 +66,7 @@ public class Event implements Comparable<Event>, Serializable
 		return this.dayCal;
 	}
 
-	
+
 	/**
 	 * Compares two events first by start time then by end time.
 	 */
@@ -98,7 +98,7 @@ public class Event implements Comparable<Event>, Serializable
 			start += " am";
 		else
 			start += " pm";
-		
+
 		String end = endTimeCal.get(Calendar.HOUR) + ":";
 		int endMin = endTimeCal.get(Calendar.MINUTE);
 		if (endMin == 0)
@@ -111,7 +111,7 @@ public class Event implements Comparable<Event>, Serializable
 			end += " am";
 		else
 			end += " pm";
-		
+
 		return start + " - " + end;
 	}
 }

@@ -1,15 +1,8 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 
 /**
  * A class that creates a calendar with events using the MVC pattern
@@ -20,14 +13,14 @@ public class SimpleCalendar
 	{
 		CalendarModel calendar = new CalendarModel();
 		JFrame frame = new JFrame();
-		
+
 		// Adds the four buttons at the top of the calendar
 		JPanel topPanel = new JPanel();
 		JButton prevButton = new JButton("<"); // Controller
 		JButton nextButton = new JButton(">"); // Controller
 		JButton createButton = new JButton("Create"); // Controller
 		JButton quitButton = new JButton("Quit");
-		
+
 		prevButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -35,7 +28,7 @@ public class SimpleCalendar
 				calendar.prevDay();
 			}
 		});
-		
+
 		nextButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -43,7 +36,7 @@ public class SimpleCalendar
 				calendar.nextDay();
 			}
 		});
-		
+
 		createButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -53,7 +46,7 @@ public class SimpleCalendar
 		});
 		createButton.setBackground(Color.red);
 		createButton.setForeground(Color.white);
-		
+
 		quitButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -61,25 +54,25 @@ public class SimpleCalendar
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
-		
+
 		topPanel.add(prevButton);
 		topPanel.add(nextButton);
 		topPanel.add(createButton);
 		topPanel.add(quitButton);
 		topPanel.setBackground(Color.WHITE);
 		frame.add(topPanel, BorderLayout.NORTH);
-		
-		
+
+
 		CalendarController calendarController = new CalendarController(calendar);
 		calendar.attach(calendarController);
 		frame.add(calendarController, BorderLayout.WEST);
-		
+
 
 		CalendarView viewer = new CalendarView(calendar);
 		calendar.attach(viewer);
 		frame.add(viewer, BorderLayout.EAST);
-		
-		
+
+
 		// Saves the calendar before closing
 		frame.addWindowListener(new WindowAdapter()
 		{

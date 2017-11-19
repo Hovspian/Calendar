@@ -1,16 +1,8 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-
+import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.text.JTextComponent;
 
 enum MONTHS
 {
@@ -23,7 +15,6 @@ enum MONTHS
 public class CalendarController extends JPanel implements ChangeListener
 {
 	private CalendarModel cal;
-	private GregorianCalendar day;
 	private static final MONTHS[] monthsArr = MONTHS.values();
 
 	/**
@@ -44,16 +35,16 @@ public class CalendarController extends JPanel implements ChangeListener
 	{
 		draw();
 	}
-	
+
 	/**
 	 * Draws the panel
 	 */
-	public void draw()
+	private void draw()
 	{
 		this.removeAll(); // Clear the panel before drawing on it again
-		
-		day = cal.getSelectedDay().getDay();
-				JPanel monthPanel = new JPanel();
+
+		GregorianCalendar day = cal.getSelectedDay().getDay();
+		JPanel monthPanel = new JPanel();
 		monthPanel.setLayout(new BorderLayout());
 
 		// Says the month and year of the Calendar
@@ -61,7 +52,7 @@ public class CalendarController extends JPanel implements ChangeListener
 		monthHeader.setEditable(false);
 		monthPanel.add(monthHeader, BorderLayout.NORTH);
 
-		
+
 		JPanel daysOfMonthPanel = new JPanel();
 		daysOfMonthPanel.setLayout(new GridLayout(day.getActualMaximum(Calendar.WEEK_OF_MONTH) + 1, 7));
 
@@ -102,7 +93,7 @@ public class CalendarController extends JPanel implements ChangeListener
 			daysOfMonthPanel.add(label);
 		}		
 		daysOfMonthPanel.setBackground(Color.WHITE);
-		
+
 		monthPanel.add(daysOfMonthPanel, BorderLayout.SOUTH);
 		this.add(monthPanel);
 		revalidate();

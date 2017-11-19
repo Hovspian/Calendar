@@ -1,9 +1,6 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.GregorianCalendar;
-
 import javax.swing.*;
 
 /**
@@ -22,9 +19,9 @@ public class EventCreator
 		JTextField eventNameField = new JTextField("Untitled Event");
 		frame.add(eventNameField, BorderLayout.NORTH);
 
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setLayout(new FlowLayout());
-		bottomPanel.setBackground(Color.WHITE);
+		JPanel centerPanel = new JPanel();
+		centerPanel.setLayout(new FlowLayout());
+		centerPanel.setBackground(Color.WHITE);
 
 		JTextField dateField = new JTextField(calendar.getSelectedDay().getDate());
 		JTextField startTimeField = new JTextField("00:00");
@@ -33,11 +30,11 @@ public class EventCreator
 		JTextField endTimeField = new JTextField("23:59");
 		JButton saveButton = new JButton("Save");
 
-		bottomPanel.add(dateField);
-		bottomPanel.add(startTimeField);
-		bottomPanel.add(to);
-		bottomPanel.add(endTimeField);
-		bottomPanel.add(saveButton);
+		centerPanel.add(dateField);
+		centerPanel.add(startTimeField);
+		centerPanel.add(to);
+		centerPanel.add(endTimeField);
+		centerPanel.add(saveButton);
 
 		saveButton.addActionListener(new ActionListener()
 		{
@@ -63,7 +60,7 @@ public class EventCreator
 					frame.pack();
 					return;
 				}
-				
+
 				Event event = new Event(eventNameField.getText(), new GregorianCalendar(year, month, day, startHour, startMinute), new GregorianCalendar(year, month, day, endHour, endMinute));
 				boolean eventCreated = calendar.createEvent(event);
 				// Close the window if the event is created
@@ -77,8 +74,8 @@ public class EventCreator
 				}
 			}
 		});
-		
-		frame.add(bottomPanel, BorderLayout.CENTER);
+
+		frame.add(centerPanel, BorderLayout.CENTER);
 
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.pack();
