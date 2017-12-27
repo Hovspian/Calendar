@@ -61,7 +61,7 @@ public class CalendarModel
 	 * Returns the events loaded in the calendar
 	 * @return the events loaded in the calendar
 	 */
-	public TreeMap<GregorianCalendar, TreeSet<Event>> getEvents()
+	public TreeMap<GregorianCalendar, TreeSet<Event>> getAllEvents()
 	{
 		return events;
 	}
@@ -146,6 +146,64 @@ public class CalendarModel
 	}
 
 	/**
+	 * Goes forward one month on the calendar
+	 */
+	public void nextMonth()
+	{
+		GregorianCalendar nextMonth = selectedDay.getDay();
+		nextMonth.add(Calendar.MONTH, 1);
+		selectedDay = new DailyEvent(nextMonth, events.get(nextMonth));
+		notifyListeners();
+	}
+	
+	/**
+	 * Goes backward one month on the calendar
+	 */
+	public void prevMonth()
+	{
+		GregorianCalendar prevMonth = selectedDay.getDay();
+		prevMonth.add(Calendar.MONTH, -1);
+		selectedDay = new DailyEvent(prevMonth, events.get(prevMonth));
+		notifyListeners();
+	}
+	
+	/**
+	 * Deletes all scheduled events
+	 */
+	public void deleteAllEvents()
+	{
+		this.events = new TreeMap<GregorianCalendar, TreeSet<Event>>();
+		selectedDay = new DailyEvent(selectedDay.getDay(), events.get(selectedDay.getDay()));
+		notifyListeners();
+	}
+	
+	/**
+	 * Deletes all scheduled events on a particular day
+	 * @param c the day to delete events on
+	 */
+	public void deleteDayEvents(GregorianCalendar c)
+	{
+		events.remove(c);
+		if (selectedDay.getDay().equals(c))
+		{
+			selectedDay = new DailyEvent(c, events.get(c));
+		}
+		notifyListeners();
+	}
+	
+	/**
+	 * Deletes a single scheduled event
+	 * @param c the day of the event
+	 * @param e the event to be deleted
+	 */
+	public void deleteSingleEvent(GregorianCalendar c, Event e)
+	{
+		this.events.get(c).remove(e);
+		notifyListeners();
+	}
+	
+	
+	/**
 	 * Loads a text file events.txt with events from previous uses of MyCalendar.
 	 * @throws IOException
 	 * @throws ClassNotFoundException
@@ -177,12 +235,6 @@ public class CalendarModel
 		out.writeObject(this.events);
 		out.close();
 	}
-
-
-
-
-
-
 
 	/**
 	 * A class that holds a day (represented as a GregorianCalendar) and the events scheduled for that day

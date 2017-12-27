@@ -25,9 +25,11 @@ public class EventCreator
 
 		JTextField dateField = new JTextField(calendar.getSelectedDay().getDate());
 		JTextField startTimeField = new JTextField("00:00");
+		startTimeField.setPreferredSize(new Dimension(40, (int)startTimeField.getPreferredSize().getHeight()));
 		JTextArea to = new JTextArea("to");
 		to.setEditable(false);
 		JTextField endTimeField = new JTextField("23:59");
+		endTimeField.setPreferredSize(new Dimension(40, (int)endTimeField.getPreferredSize().getHeight()));
 		JButton saveButton = new JButton("Save");
 
 		centerPanel.add(dateField);
@@ -54,16 +56,18 @@ public class EventCreator
 				int endMinute = Integer.parseInt(endArr[1]);
 
 				// Checks if end time comes before start time
-				if (startHour > endHour || (startHour == endHour && startMinute > endMinute))
+				GregorianCalendar startTime = new GregorianCalendar(year, month, day, startHour, startMinute);
+				GregorianCalendar endTime = new GregorianCalendar(year, month, day, endHour, endMinute);
+				if (startTime.after(endTime))
 				{
 					frame.add(new JTextArea("Event times input incorrectly"), BorderLayout.SOUTH);
 					frame.pack();
 					return;
 				}
 
-				Event event = new Event(eventNameField.getText(), new GregorianCalendar(year, month, day, startHour, startMinute), new GregorianCalendar(year, month, day, endHour, endMinute));
+				Event event = new Event(eventNameField.getText(), startTime, endTime);
 				boolean eventCreated = calendar.createEvent(event);
-				// Close the window if the event is created
+				// Close the window if the event is successfully created
 				if (eventCreated)
 					frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 				// Give an error message if there is a conflict with the event

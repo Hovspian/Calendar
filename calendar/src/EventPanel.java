@@ -1,5 +1,7 @@
 import javax.swing.*;
+
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
 
 /**
@@ -68,8 +70,7 @@ public class EventPanel extends JPanel
 
 			Rectangle r = new Rectangle(0, startCal.get(Calendar.HOUR_OF_DAY) * HOUR_BOX_HEIGHT + startCal.get(Calendar.MINUTE) / 60 * HOUR_BOX_HEIGHT, BOX_WIDTH, (int) (minutes / 60 * HOUR_BOX_HEIGHT));
 			eventRectangles.add(r);
-
-
+			
 			String name = e.getName();
 			if (eventDetails.containsKey(name))
 				eventDetails.get(name).add(new Point(BORDER_SIZE, g2.getFont().getSize() + startCal.get(Calendar.HOUR_OF_DAY) * HOUR_BOX_HEIGHT + startCal.get(Calendar.MINUTE) / 60 * HOUR_BOX_HEIGHT));

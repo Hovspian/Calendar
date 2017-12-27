@@ -47,15 +47,70 @@ public class CalendarController extends JPanel implements ChangeListener
 		JPanel monthPanel = new JPanel();
 		monthPanel.setLayout(new BorderLayout());
 
-		// Says the month and year of the Calendar
-		JTextArea monthHeader = new JTextArea(monthsArr[day.get(Calendar.MONTH)] + " " + day.get(Calendar.YEAR));
-		monthHeader.setEditable(false);
-		monthPanel.add(monthHeader, BorderLayout.NORTH);
-
+		addHeader(monthPanel, day);
 
 		JPanel daysOfMonthPanel = new JPanel();
 		daysOfMonthPanel.setLayout(new GridLayout(day.getActualMaximum(Calendar.WEEK_OF_MONTH) + 1, 7));
-
+		daysOfMonthPanel.setBackground(Color.WHITE);
+		
+		addDaysOfWeek(daysOfMonthPanel);
+		addDaysOfMonth(daysOfMonthPanel, day);
+		monthPanel.add(daysOfMonthPanel, BorderLayout.SOUTH);
+		
+		this.add(monthPanel);
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Adds a header to the panel for the month.
+	 * The header will say the month and year and provides arrows to move forward or backward by a month.
+	 * @param monthPanel the panel to add a header to
+	 * @param day the calendar being used for the selected month
+	 */
+	private void addHeader(JPanel monthPanel, GregorianCalendar day)
+	{
+		JPanel headerPanel = new JPanel();
+		headerPanel.setLayout(new BorderLayout());
+		headerPanel.setBackground(Color.WHITE);
+		
+		JTextArea monthHeader = new JTextArea(monthsArr[day.get(Calendar.MONTH)] + " " + day.get(Calendar.YEAR));
+		monthHeader.setEditable(false);
+		headerPanel.add(monthHeader, BorderLayout.WEST);
+		
+		JPanel monthChangePanel = new JPanel();
+		monthChangePanel.setBackground(Color.WHITE);
+		
+		JLabel prevMonth = new JLabel("<");
+		prevMonth.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				cal.prevMonth();
+			}
+		});
+		monthChangePanel.add(prevMonth);
+		
+		JLabel nextMonth = new JLabel(">");
+		nextMonth.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				cal.nextMonth();
+			}
+		});
+		monthChangePanel.add(nextMonth);
+		headerPanel.add(monthChangePanel, BorderLayout.EAST);
+		
+		monthPanel.add(headerPanel, BorderLayout.NORTH);
+	}
+	
+	/**
+	 * Adds the days of the week to the top of the panel for the days of the month
+	 * @param daysOfMonthPanel the panel to add the days of week to
+	 */
+	private void addDaysOfWeek(JPanel daysOfMonthPanel)
+	{
 		// Creates the header for each day of the week
 		String[] daysArr = {"S    ", "M    ", "T    ", "W    ", "T    ", "F    ", "S    "};
 		for (String s : daysArr)
@@ -64,8 +119,15 @@ public class CalendarController extends JPanel implements ChangeListener
 			t.setEditable(false);
 			daysOfMonthPanel.add(t);
 		}
-
-
+	}
+	
+	/**
+	 * Adds the days of the month to the panel
+	 * @param daysOfMonthPanel the panel to add days of the month to
+	 * @param day the selected day
+	 */
+	private void addDaysOfMonth(JPanel daysOfMonthPanel, GregorianCalendar day)
+	{
 		GregorianCalendar firstOfMonth = new GregorianCalendar(day.get(Calendar.YEAR), day.get(Calendar.MONTH), 1);
 
 		// Creates the number portion of the calendar
@@ -91,12 +153,8 @@ public class CalendarController extends JPanel implements ChangeListener
 			});
 
 			daysOfMonthPanel.add(label);
-		}		
-		daysOfMonthPanel.setBackground(Color.WHITE);
-
-		monthPanel.add(daysOfMonthPanel, BorderLayout.SOUTH);
-		this.add(monthPanel);
-		revalidate();
-		repaint();
+		}	
 	}
+	
+	
 }

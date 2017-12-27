@@ -19,6 +19,7 @@ public class SimpleCalendar
 		JButton prevButton = new JButton("<"); // Controller
 		JButton nextButton = new JButton(">"); // Controller
 		JButton createButton = new JButton("Create"); // Controller
+		JButton deleteButton = new JButton("Delete"); // Controller
 		JButton quitButton = new JButton("Quit");
 
 		prevButton.addActionListener(new ActionListener()
@@ -47,6 +48,16 @@ public class SimpleCalendar
 		createButton.setBackground(Color.red);
 		createButton.setForeground(Color.white);
 
+		deleteButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				new EventDeleter(calendar);
+			}
+		});
+		
+		
+		
 		quitButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -58,6 +69,7 @@ public class SimpleCalendar
 		topPanel.add(prevButton);
 		topPanel.add(nextButton);
 		topPanel.add(createButton);
+		topPanel.add(deleteButton);
 		topPanel.add(quitButton);
 		topPanel.setBackground(Color.WHITE);
 		frame.add(topPanel, BorderLayout.NORTH);
